@@ -3,6 +3,9 @@ Faker::Config.locale = :fr
 
 User.destroy_all
 City.destroy_all
+Gossip.destroy_all
+Tag.destroy_all
+JoinTableTagGossip.destroy_all
 
 #Cities
 
@@ -12,7 +15,9 @@ City.destroy_all
   city_name = city_and_zip.split(' ').last
   City.create(name: city_name, zip_code: zip)
 end
-
+puts
+puts "Cities table"
+tp City.all
 #Users
 adjectifs= %w[petit grand maigre gros chauve muscle intelligent parfait mediocre insupportable eblouissant valeureux]
 10.times do 
@@ -23,11 +28,36 @@ adjectifs= %w[petit grand maigre gros chauve muscle intelligent parfait mediocre
   User.create(first_name: first_name, last_name: Faker::Name.last_name ,description: text, email: Faker::Internet.email, age: age, city: city )
 
 end
+puts
+puts "Users table"
+tp User.all
 
 #Gossips
 20.times do 
-  Gossip.create(title: Faker::Hipster.word, content: Faker::ChuckNorris.fact, )
+  Gossip.create(title: Faker::Hipster.word, content: Faker::ChuckNorris.fact, user: User.all.sample )
   
 end
+puts
+puts "Gossips table"
+tp Gossip.all
 
+#Tags 
+10.times do
+  Tag.create(title: Faker::Verb.base)
+end
+puts
+puts "Cities table"
+tp Tag.all
+
+Tag.all.each do |t|
+  JoinTableTagGossip.create(tag: t, gossip: Gossip.all.sample)
+end
+
+Gossip.all.each do |g|
+  JoinTableTagGossip.create(tag: Tag.all.sample, gossip: g)
+end
+
+puts
+puts "JoinTableTagGossip table"
+tp JoinTableTagGossip.all
 

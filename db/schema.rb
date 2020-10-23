@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_22_171910) do
+ActiveRecord::Schema.define(version: 2020_10_22_224457) do
 
   create_table "cities", force: :cascade do |t|
     t.string "name"
@@ -30,6 +30,26 @@ ActiveRecord::Schema.define(version: 2020_10_22_171910) do
     t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_gossips_on_user_id"
+  end
+
+  create_table "join_table_tag_gossips", force: :cascade do |t|
+    t.integer "tag_id"
+    t.integer "gossip_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["gossip_id"], name: "index_join_table_tag_gossips_on_gossip_id"
+    t.index ["tag_id"], name: "index_join_table_tag_gossips_on_tag_id"
+  end
+
+  create_table "lier_private_message_users", force: :cascade do |t|
+    t.integer "receiver_id"
+    t.integer "sent_message_id"
+    t.integer "received_message_id"
+    t.index ["received_message_id"], name: "index_lier_private_message_users_on_received_message_id"
+    t.index ["receiver_id"], name: "index_lier_private_message_users_on_receiver_id"
+    t.index ["sent_message_id"], name: "index_lier_private_message_users_on_sent_message_id"
   end
 
   create_table "likes", force: :cascade do |t|
@@ -41,6 +61,10 @@ ActiveRecord::Schema.define(version: 2020_10_22_171910) do
     t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.integer "sender_id"
+    t.index ["sender_id"], name: "index_private_messages_on_sender_id"
+    t.index ["user_id"], name: "index_private_messages_on_user_id"
   end
 
   create_table "tags", force: :cascade do |t|
