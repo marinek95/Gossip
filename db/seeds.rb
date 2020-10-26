@@ -5,7 +5,9 @@ User.destroy_all
 City.destroy_all
 Gossip.destroy_all
 Tag.destroy_all
+PrivateMessage.destroy_all
 JoinTableTagGossip.destroy_all
+LierPrivateMessageUser.destroy_all
 
 #Cities
 
@@ -61,3 +63,23 @@ puts
 puts "JoinTableTagGossip table"
 tp JoinTableTagGossip.all
 
+#Private messages
+10.times do
+  PrivateMessage.create(content:Faker::Lorem.sentence,sender: User.all.sample)
+end
+puts
+puts "Private messages table"
+tp PrivateMessage.all
+
+#Lier private_messages_users
+User.all.each do |u|
+  LierPrivateMessageUser.create(user: u, private_message: PrivateMessage.all.sample)
+end
+
+PrivateMessage.all.each do |pm|
+  LierPrivateMessageUser.create(user: User.all.sample, private_message: pm)
+end
+
+puts
+puts "Lier private message et users table"
+tp LierPrivateMessageUser.all
