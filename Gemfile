@@ -3,6 +3,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.7.1'
 
+gem 'rails_db', '2.3.0'
+gem 'rails-erd', group: :development
 gem 'faker'
 gem 'table_print'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

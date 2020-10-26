@@ -44,12 +44,10 @@ ActiveRecord::Schema.define(version: 2020_10_22_224457) do
   end
 
   create_table "lier_private_message_users", force: :cascade do |t|
-    t.integer "receiver_id"
-    t.integer "sent_message_id"
-    t.integer "received_message_id"
-    t.index ["received_message_id"], name: "index_lier_private_message_users_on_received_message_id"
-    t.index ["receiver_id"], name: "index_lier_private_message_users_on_receiver_id"
-    t.index ["sent_message_id"], name: "index_lier_private_message_users_on_sent_message_id"
+    t.integer "user_id"
+    t.integer "private_message_id"
+    t.index ["private_message_id"], name: "index_lier_private_message_users_on_private_message_id"
+    t.index ["user_id"], name: "index_lier_private_message_users_on_user_id"
   end
 
   create_table "likes", force: :cascade do |t|
@@ -61,10 +59,8 @@ ActiveRecord::Schema.define(version: 2020_10_22_224457) do
     t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
     t.integer "sender_id"
     t.index ["sender_id"], name: "index_private_messages_on_sender_id"
-    t.index ["user_id"], name: "index_private_messages_on_user_id"
   end
 
   create_table "tags", force: :cascade do |t|
